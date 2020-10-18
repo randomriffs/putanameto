@@ -20,7 +20,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
    font-family: Avenir, Helvetica, Arial, sans-serif;
-  color: #2c3e50;
+  color: black;
   display: flex;
   justify-content: center;
   margin-top: 50px;

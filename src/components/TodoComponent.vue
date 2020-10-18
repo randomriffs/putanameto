@@ -44,7 +44,8 @@ export default {
         id: uuid.v1(),
         task: value.charAt(0).toUpperCase() + value.slice(1),
         isCompleted: false,
-        edit: true
+        edit: true,
+        time: new Date().toLocaleString()
       };
       // Adding new task to local state
       this.data.push(newTaskSchema);

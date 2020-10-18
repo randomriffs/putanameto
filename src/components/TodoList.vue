@@ -29,7 +29,7 @@
                 />
                 <span class="checkmark"></span>
               </label>
-              <span @click="handleEdit(todo)">{{todo.task}}</span>
+              <span @click="handleEdit(todo)">{{todo.task}} <span class="time">{{todo.time}}</span></span>
             </div>
             <!-- Task edit mode (onclicking on top of the item list) -->
             <div v-else class="list-check-update">
@@ -126,6 +126,8 @@ ul {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  display: flex;
+  align-items: flex-end;
 }
 .task-checkbox {
   transform: scale(2);
@@ -162,7 +164,7 @@ ul {
   border-radius: 0;
 }
 .list-check-update input {
-  color: #2c3e50;
+  color: black;
   border-top: none;
   border-bottom: none;
   border-right: none;
@@ -193,7 +195,7 @@ li {
   /* display: block; */
   position: relative;
   padding-left: 35px;
-  margin-bottom: 12px;
+  margin-bottom: 44px;
   margin-right: 10px;
   cursor: pointer;
   font-size: 22px;
@@ -202,7 +204,17 @@ li {
   -ms-user-select: none;
   user-select: none;
 }
-
+.container span {
+  width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.time{
+  font-size: .3em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
 /* Hide the browser's default checkbox */
 .container input {
   position: absolute;
@@ -219,17 +231,17 @@ li {
   left: 0;
   height: 30px;
   width: 30px;
-  background-color: #2d3e50;
+  background-color: black;
 }
 
 /* On mouse-over, add a grey background color */
 .container:hover input ~ .checkmark {
-  background-color: #2d3e50;
+  background-color: black;
 }
 
 /* When the checkbox is checked, add a blue background */
 .container input:checked ~ .checkmark {
-  background-color: #2d3e50;
+  background-color: black;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
