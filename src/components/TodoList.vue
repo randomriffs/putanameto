@@ -269,6 +269,7 @@ li {
 @media only screen and (max-device-width: 700px) and (-webkit-min-device-pixel-ratio: 2) {
   .list-check {
     font-size: 6vw;
+    width: 80%;
   }
   .delete-list {
     font-size: 6vw;
