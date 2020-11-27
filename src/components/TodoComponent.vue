@@ -3,12 +3,14 @@
     <img src="../assets/loader.gif" />
   </div>
   <div v-else class="todo-container">
+    <div class="top-sticky">
     <div class="header">
-      <h1 class="title-header">T&#9673;D&#9673;</h1>
+      <h1 class="title-header"><span>T</span><span>&#9673;</span><span>D</span><span>&#9673;</span></h1>
       <h2 class="sort-header" @click="sort">&#9650;</h2>
     </div>
         <div class="divider"></div>
     <div class="divider-two"></div>
+    </div>
     <TodoList
       :todoLists="data"
       @clicked="addTaskData"
@@ -17,6 +19,16 @@
       @edit-task="editTaskFirestore"
       @update-task="updateFirestore"
     />
+        <span class="add-new-input">
+      <input
+        type="text"
+        v-model="task"
+        @blur="addTask()"
+        @keyup.enter="addTask()"
+        :placeholder="placeHolder"
+        @focus="placeHolder=''"
+      />
+    </span>
   </div>
 </template>
 
@@ -35,18 +47,21 @@ export default {
   data: function() {
     return {
       data: [],
-      isLoading: true
+      isLoading: true,
+       placeHolder: "+ List Item" // Initial place holder
     };
   },
   methods: {
     addTaskData: function(value) {
       var newTaskSchema = {
         id: uuid.v1(),
-        task: value.charAt(0).toUpperCase() + value.slice(1),
+        // task: value.charAt(0).toUpperCase() + value.slice(1),
+        task: value,
         isCompleted: false,
         edit: true,
         time: new Date().toLocaleString()
       };
+      // window.scrollTo(0,document.getElementById('toto-list').scrollHeight);
       // Adding new task to local state
       this.data.push(newTaskSchema);
 
@@ -62,6 +77,13 @@ export default {
         .catch(function(error) {
           console.error("Error writing document: ", error);
         });
+    },
+     addTask: function() {
+      this.placeHolder = "+ List Item";
+      if (this.task) {
+        this.addTaskData(this.task)
+        this.task = "";
+      }
     },
     getTaskFromFirestore: function() {
       // Getting task list from firestore collection "to-do"
@@ -183,6 +205,20 @@ export default {
 .todo-container {
   width: 55%;
   min-width: 50%;
+  color: #dddddd
+
+}
+.title-header > span:nth-child(1){
+  color:#ea5455
+}
+.title-header > span:nth-child(2){
+  color:#158467
+}
+.title-header > span:nth-child(3){
+  color:#07689f
+}
+.title-header > span:nth-child(4){
+  color:#f0a500
 }
 .header {
   display: flex;
@@ -198,33 +234,67 @@ export default {
   margin: 0;
   margin-right: 1vw;
   margin-top: 15px;
+  color: #07689f;
 }
 .header h1 {
   /* transform: scale(1.2); */
   font-size: 2.5em;
 }
 .loader {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  /* position: absolute;
+  /* top: 50%;
+  left: 50%; */
+  /* transform: translate(-50%, -50%);  */
+  background-color: white;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+.loader img {
+  width: 12em;
+  height: 12em;
 }
 .divider {
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
+  border-top: 1px solid #f0a500;
+  border-bottom: 1px solid #f0a500;
   height: 10px;
   width: 90%;
   position: absolute;
   left: 0;
 }
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #dddddd;
+  /* opacity: 1; Firefox */
+}
 .divider-two {
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
+  border-top: 1px solid #f0a500;
+  border-bottom: 1px solid #f0a500;
   height: 10px;
-  width: 100vw;
+  width: 80vw;
   transform: rotate(90deg);
   position: absolute;
-  right: -19vw;
+  right: -10vw;
+}
+
+.add-new-input input {
+  border-right: none;
+  border-left: none;
+  border-top: 10px solid #f0a500;
+  border-bottom: 10px solid #f0a500;
+  border-width: 100%;
+  width: 100%;
+  height: 50px;
+  font-size: 19px;
+  margin-top: 15px;
+  font-size: 1.5em;
+  font-weight: 700;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  outline: none;
+  border-radius: 0;
+  color: white
 }
 /* Media query for screen less than 700px */
 @media only screen and (max-device-width: 700px) and (-webkit-min-device-pixel-ratio: 2) {
@@ -233,12 +303,12 @@ export default {
     min-width: 70%;
   }
   .header h1 {
-    font-size: 13vw;
+    font-size: 10vw;
     margin-bottom: 0px;
     margin-top: 0px;
   }
   .sort-header {
-    font-size: 15vw;
+    font-size: 12vw !important;
     margin: 0;
     /* margin-top: 20px; */
   }
@@ -246,10 +316,11 @@ export default {
     width: 100%;
   }
   .divider-two{
+    display: none;
     right: -24vw;
   }
   .title-header {
-    left: 9vw;
+    left: 8vw;
   }
 }
 </style>

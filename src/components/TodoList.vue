@@ -1,5 +1,5 @@
 <template>
-  <div class="todo-list">
+  <div class="todo-list" id="todo-list">
     <!-- Loads when the task list is empty  -->
     <div v-if="!todoLists.length" class="empty-list">
       <i class="fa fa-calendar-check-o"></i>
@@ -50,16 +50,7 @@
     </div>
     <!-- Add new input container. New task is added, when the input filed is out of focus or blur.
     And when user hit enter. No button action integrated-->
-    <span class="add-new-input">
-      <input
-        type="text"
-        v-model="task"
-        @blur="addTask()"
-        @keyup.enter="addTask()"
-        :placeholder="placeHolder"
-        @focus="placeHolder=''"
-      />
-    </span>
+
   </div>
 </template>
 
@@ -109,6 +100,11 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.todo-list {
+  overflow-y: scroll;
+  min-height: calc(100vh - 250px);
+  height: calc(100vh - 250px);
+}
 .lineThrough {
   text-decoration: line-through;
 }
@@ -146,12 +142,13 @@ ul {
   cursor: pointer;
   font-size: 2em;
   font-weight: 600;
+  color: #ea5455;
 }
 .add-new-input input {
   border-right: none;
   border-left: none;
-  border-top: 10px solid #2d3e50;
-  border-bottom: 10px solid #2d3e50;
+  border-top: 10px solid black;
+  border-bottom: 10px solid black;
   border-width: 100%;
   width: 100%;
   height: 50px;
@@ -164,7 +161,7 @@ ul {
   border-radius: 0;
 }
 .list-check-update input {
-  color: black;
+  color: #dddddd;
   border-top: none;
   border-bottom: none;
   border-right: none;
@@ -186,6 +183,7 @@ li {
 .empty-list {
   text-align: center;
   margin: 4em 0;
+  color: #dddddd
 }
 .fa-calendar-check-o {
   font-size: 8em;
@@ -229,19 +227,19 @@ li {
   position: absolute;
   top: 0;
   left: 0;
-  height: 30px;
+  height: 40px;
   width: 30px;
-  background-color: black;
+  background-color: #158467;
 }
 
 /* On mouse-over, add a grey background color */
 .container:hover input ~ .checkmark {
-  background-color: black;
+  background-color: #158467;
 }
 
 /* When the checkbox is checked, add a blue background */
 .container input:checked ~ .checkmark {
-  background-color: black;
+  background-color: #158467;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
@@ -258,11 +256,11 @@ li {
 
 /* Style the checkmark/indicator */
 .container .checkmark:after {
-  left: 9px;
-  top: 2px;
+  left: 12px;
+  top: 8px;
   width: 8px;
   height: 17px;
-  border: solid white;
+  border: solid black;
   border-width: 0 4px 4px 0;
   transform: rotate(45deg);
 }
@@ -292,13 +290,18 @@ li {
     font-size: 5vw;
   }
   .list-check-update input {
-    font-size: 5vw;
-    padding-left: 50px;
+    font-size: 6vw !important;
+    /* padding-left: 20px; */
     padding-bottom: 0px;
   }
   .checkmark {
-    height: 25px;
+    height: 40px;
     width: 25px;
   }
+  .todo-list {
+  overflow-y: scroll;
+  min-height: calc(100vh - 260px);
+  height: calc(100vh - 260px);
+}
 }
 </style>

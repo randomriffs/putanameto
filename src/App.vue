@@ -16,6 +16,10 @@ export default {
 </script>
 
 <style>
+
+body, input {
+  background-color: black;
+}
 #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -23,7 +27,8 @@ export default {
   color: black;
   display: flex;
   justify-content: center;
-  margin-top: 50px;
+  overflow: hidden;
+  /* margin-top: 50px; */
 }
 
 /* Media query for screen less than 700px */
